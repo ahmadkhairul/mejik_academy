@@ -1,0 +1,239 @@
+@font-face {
+  font-family: "GoogleSans";
+  src: url("./fonts/GoogleSans-Regular.ttf") format("truetype");
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+* {
+  font-family: "GoogleSans";
+}
+
+a {
+  text-decoration: none;
+}
+
+/* CHECK BOX */
+
+/* Base for label styling */
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+  position: absolute;
+  left: -9999px;
+}
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+  position: relative;
+  padding-left: 1.95em;
+  cursor: pointer;
+}
+
+/* checkbox aspect */
+[type="checkbox"]:not(:checked) + label:before,
+[type="checkbox"]:checked + label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 15px;
+  height: 15px;
+  border: 2px solid #fff;
+  background: #8854d0;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+/* checked mark aspect */
+[type="checkbox"]:not(:checked) + label:after,
+[type="checkbox"]:checked + label:after {
+  content: "\2713\0020";
+  position: absolute;
+  top: -2px;
+  left: 3px;
+  font-size: 1.3em;
+  line-height: 0.8;
+  color: #fac024;
+  transition: all 0.2s;
+}
+/* checked mark aspect changes */
+[type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+  transform: scale(0);
+}
+[type="checkbox"]:checked + label:after {
+  opacity: 1;
+  transform: scale(1);
+}
+/* disabled checkbox */
+[type="checkbox"]:disabled:not(:checked) + label:before,
+[type="checkbox"]:disabled:checked + label:before {
+  box-shadow: none;
+  border-color: #bbb;
+  background-color: #ddd;
+}
+[type="checkbox"]:disabled:checked + label:after {
+  color: #999;
+}
+[type="checkbox"]:disabled + label {
+  color: #aaa;
+}
+
+/* CONTAINER */
+
+.header {
+  padding: 5px 20px 0;
+  width: 100%;
+  height: 80px;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+  margin-bottom: 50px;
+}
+
+.container {
+  padding: 5px 20px;
+}
+
+/* DISPLAY */
+
+.flex-true {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+/* BUTTON */
+
+.primary {
+  background: #3597ff;
+  border-radius: 1px;
+  border: 0.25px solid #cccccc;
+  width: 100%;
+
+  height: 30px;
+  line-height: 16px;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.secondary {
+  background: #ffffff;
+  border-radius: 1px;
+  border: 0.25px solid #cccccc;
+  width: 100%;
+
+  height: 30px;
+  line-height: 16px;
+  display: inline-block;
+  cursor: pointer;
+  color: #000000;
+  text-decoration: none;
+}
+
+/* GRID */
+
+* {
+  box-sizing: border-box;
+}
+
+.row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.col {
+  float: left;
+  padding: 0.5em;
+}
+
+.col-1 {
+  width: 8.33%;
+}
+.col-2 {
+  width: 16.66%;
+}
+.col-3 {
+  width: 25%;
+}
+.col-4 {
+  width: 33.33%;
+}
+.col-5 {
+  width: 41.66%;
+}
+.col-6 {
+  width: 50%;
+}
+.col-7 {
+  width: 58.33%;
+}
+.col-8 {
+  width: 66.66%;
+}
+.col-9 {
+  width: 75%;
+}
+.col-10 {
+  width: 83.33%;
+}
+.col-11 {
+  width: 91.66%;
+}
+.col-12 {
+  width: 100%;
+}
+
+/* Card */
+
+@media (max-width: 768px) {
+  /* For tablets: */
+
+  .col-s-1 {
+    width: 8.33%;
+  }
+  .col-s-2 {
+    width: 16.66%;
+  }
+  .col-s-3 {
+    width: 25%;
+  }
+  .col-s-4 {
+    width: 33.33%;
+  }
+  .col-s-5 {
+    width: 41.66%;
+  }
+  .col-s-6 {
+    width: 50%;
+  }
+  .col-s-7 {
+    width: 58.33%;
+  }
+  .col-s-8 {
+    width: 66.66%;
+  }
+  .col-s-9 {
+    width: 75%;
+  }
+  .col-s-10 {
+    width: 83.33%;
+  }
+  .col-s-11 {
+    width: 91.66%;
+  }
+  .col-s-12 {
+    width: 100%;
+  }
+}

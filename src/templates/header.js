@@ -1,21 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 import Typography from "../components/typography";
 import { Input } from "../components/form";
 import { Container, Row, Col } from "../components/container";
 import { searchCourse } from "../_actions/course";
+import { authUser } from "../_actions/auth";
 
-const App = ({ searchCourse }) => {
-  const styles = {
-    brand: {
-      fontStyle: "normal",
-      fontWeight: "bold",
-      fontSize: "14px",
-      lineHeight: "20px",
-      color: "#505050"
-    }
-  };
+const styles = {
+  brand: {
+    fontStyle: "normal",
+    fontWeight: "bold",
+    fontSize: "14px",
+    lineHeight: "20px",
+    color: "#505050"
+  }
+};
+
+const App = ({ user, authUser, searchCourse }) => {
+  // const { data, loading, error } = user;
+
+  useEffect(() => {
+    authUser();
+  }, []);
+
+  // console.log(data);
 
   return (
     <Container header>
@@ -27,7 +36,6 @@ const App = ({ searchCourse }) => {
           <Input
             type="text"
             onChange={event => {
-              console.log(event.target.value);
               searchCourse(event.target.value);
             }}
             placeholder="Search course here ..."
@@ -47,12 +55,13 @@ const App = ({ searchCourse }) => {
 
 const mapStateToProps = state => {
   return {
-    // course: state.course
+    // user: state.user
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    authUser: () => dispatch(authUser()),
     searchCourse: search => dispatch(searchCourse(search))
   };
 };

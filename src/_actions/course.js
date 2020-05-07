@@ -14,7 +14,12 @@ export const getCourse = () => {
         }
       }`;
 
-      const res = await GQL(string);
+      const value = {
+        auth: false,
+        query: string
+      };
+
+      const res = await GQL(value);
       const data = res.data.data.courses;
       return data;
     }
@@ -36,7 +41,12 @@ export const searchCourse = search => {
         }
       }`;
 
-      const res = await GQL(string);
+      const value = {
+        auth: false,
+        query: string
+      };
+
+      const res = await GQL(value);
       const data = res.data.data.courses;
       return data;
     }

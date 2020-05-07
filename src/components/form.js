@@ -1,5 +1,4 @@
 import React from "react";
-import Typography from "../components/typography";
 
 const style = {
   form: {
@@ -15,8 +14,12 @@ const style = {
   }
 };
 
-export const Form = ({ children }) => {
-  return <form style={style.form}>{children}</form>;
+export const Form = ({ children, onSubmit }) => {
+  return (
+    <form style={style.form} onSubmit={onSubmit}>
+      {children}
+    </form>
+  );
 };
 
 export const Label = ({ children, style }) => {
@@ -33,7 +36,7 @@ export const Checkbox = ({ value, label, name, onChange }) => {
         id={name}
         onChange={onChange}
       />
-      <label style={style.checkLabel} for={name}>
+      <label style={style.checkLabel} htmlFor={name}>
         {label}
       </label>
     </>

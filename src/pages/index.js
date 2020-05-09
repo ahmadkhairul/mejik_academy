@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { getCourse } from "../_actions/course";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "../components/container";
 import Typography from "../components/typography";
+import { useQuery } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
 
 const styles = {
   card: {
@@ -47,17 +47,26 @@ const styles = {
   }
 };
 
-const App = ({ course, getCourse }) => {
-  const { data, loading, error } = course;
+const App = () => {
+  const GET_COURSE = gql`
+    {
+      courses {
+        id
+        title
+        cover
+        description
+      }
+    }
+  `;
+  const { data, loading, error } = useQuery(GET_COURSE);
 
-  useEffect(() => {
-    getCourse();
-  }, []);
+  if (loading) return <h1>Loading...</h1>;
+  if (error) return <h1>Error...</h1>;
 
   return (
     <Container>
       <Row>
-        {data.map((item, index) => (
+        {data.courses.map((item, index) => (
           <Col style={styles.card} key={index} lg={2}>
             {item.cover ? (
               <img src={item.cover} alt={item.title} style={styles.cover} />
@@ -75,16 +84,4 @@ const App = ({ course, getCourse }) => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    course: state.course
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    getCourse: () => dispatch(getCourse())
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

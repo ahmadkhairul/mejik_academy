@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { Link, Redirect } from "react-router-dom";
+import { useMutation } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
 
 import { Container } from "../components/container";
 import { Form, Label, Input, Checkbox } from "../components/form";
 import Button from "../components/button";
-import { loginUser } from "../_actions/auth";
 
 const style = {
   loginContainer: {
@@ -69,19 +69,39 @@ const style = {
   }
 };
 
-const App = ({ user, loginUser }) => {
+const LOGIN_USER = gql`
+  mutation login($email: EmailAddress!, $password: String) {
+    login(input: { email: $email, password: $password }) {
+      user {
+        id
+        firstName
+        lastName
+        email
+        role
+      }
+      token
+    }
+  }
+`;
+
+const LOGIN = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [result, setResult] = useState([]);
+  const [login] = useMutation(LOGIN_USER);
 
-  const value = {
-    email,
-    password
-  };
-
-  const handleSubmit = event => {
-    event.preventDefault();
-    loginUser(value);
-    console.log(value);
+  const postLogin = async () => {
+    try {
+      const data = await login({
+        variables: {
+          email: email,
+          password: password
+        }
+      });
+      return data;
+    } catch (error) {
+      return error;
+    }
   };
 
   return (
@@ -89,7 +109,21 @@ const App = ({ user, loginUser }) => {
       <img src="/assets/Logography.svg" />
       <h1 style={style.H1}>Login</h1>
       <h2 style={style.H2}>Login and start managing your learning process!</h2>
-      <Form onSubmit={event => handleSubmit(event)}>
+      {result}
+      <Form
+        onSubmit={async event => {
+          event.preventDefault();
+          let data = await postLogin();
+          if (data.data) {
+            setResult(
+              `Welcome ${data.data.login.user.firstName} ${data.data.login.user.lastName}`
+            );
+            localStorage.setItem("token", data.data.login.token);
+          } else {
+            setResult("Username or Password Wrong");
+          }
+        }}
+      >
         <Label style={style.formLabel}>Email</Label>
         <Input
           style={style.formInput}
@@ -123,16 +157,4 @@ const App = ({ user, loginUser }) => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    user: state.user
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    loginUser: user => dispatch(loginUser(user))
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default LOGIN;

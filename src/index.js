@@ -2,14 +2,24 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import { Provider } from "react-redux";
-import store from "./_redux/store";
 import * as serviceWorker from "./serviceWorker";
 
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "@apollo/react-hooks";
+
+const token = localStorage.getItem("token");
+
+const client = new ApolloClient({
+  uri: "https://mejikacademy1588499516927.microgen.mejik.id/graphql",
+  headers: {
+    Authorization: token ? `Bearer ${token}` : ""
+  }
+});
+
 ReactDOM.render(
-  <Provider store={store}>
+  <ApolloProvider client={client}>
     <App />
-  </Provider>,
+  </ApolloProvider>,
   document.getElementById("root")
 );
 // If you want your app to work offline and load faster, you can change
